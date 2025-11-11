@@ -8,13 +8,6 @@ group = 'com'
 version = '0.0.1-SNAPSHOT'
 description = 'OOT-Batch'
 
-//java {
-//    toolchain {
-//        languageVersion = JavaLanguageVersion.of(17)
-//        vendor = JvmVendorSpec.AMAZON
-//    }
-//}
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
