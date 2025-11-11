@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  oot-mysql:
+    image: mysql:8.0
+    container_name: oot-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234         # root 비밀번호 지정
+      MYSQL_DATABASE: oot               # 생성할 DB명
+    ports:
+      - "3306:3306"                     # 호스트의 3306 → 컨테이너의 3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - batch-network
+
+  oot-redis:
+    image: redis:7-alpine
+    container_name: oot-redis
+    ports:
+      - "6379:6379"                     # 호스트의 6379 → 컨테이너의 6379
+    networks:
+      - batch-network
+
+volumes:
+  mysql-data:
+
+networks:
+  batch-network:
+    driver: bridge
