@@ -8,13 +8,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
-    env:
-      JAR_NAME: OOT-Batch-0.0.1-SNAPSHOT.jar
-      JAR_LOCAL_PATH: build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar
-      JAR_REMOTE_DIR: /home/ec2-user/OOT-Batch/build/libs/
-      JAR_REMOTE_PATH: /home/ec2-user/OOT-Batch/build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar
-      LOG_PATH: /home/ec2-user/OOT-Batch/batch.log
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -28,36 +21,37 @@ jobs:
       - name: Gradle Build (Skip Test)
         run: ./gradlew build -x test
 
-      - name: Copy JAR to EC2 (SCP)
+      - name: Copy JAR to EC2 via SSH
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: ${{ env.JAR_LOCAL_PATH }}
-          target: ${{ env.JAR_REMOTE_DIR }}
+          source: 'build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar'
+          target: '/home/ec2-user/OOT-Batch/build/libs/'
 
-      - name: Deploy & Restart Batch Service on EC2 (SSH)
+      - name: Deploy and Restart Batch on EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            set -e
             echo "==== 배치 프로세스 중지 시도 ===="
-            pkill -f "${JAR_REMOTE_PATH}" && echo "기존 프로세스 중지 완료." || echo "실행 중인 프로세스 없음."
-
-            echo "==== 새 프로세스 실행 ===="
-            nohup java -jar "${JAR_REMOTE_PATH}" --spring.profiles.active=dev > "${LOG_PATH}" 2>&1 &
-            sleep 5
-
-            echo "==== 실행 상태 점검 ===="
-            if pgrep -f "${JAR_REMOTE_PATH}" > /dev/null; then
-              echo "배치 프로세스가 정상적으로 재시작되었습니다."
+            set +e
+            PID=$(pgrep -f 'OOT-Batch-0.0.1-SNAPSHOT.jar')
+            if [ -n "$PID" ]; then
+              echo "기존 프로세스 종료 중 (PID: $PID)"
+              kill -9 $PID
             else
-              echo "배치 시작에 실패했습니다."; exit 1
+              echo "기존 배치 프로세스가 없습니다."
             fi
+            set -e
 
-            echo "==== 최근 로그 (10줄) ===="
-            tail -10 "${LOG_PATH}" || echo "로그 파일 조회 실패"
+            echo "새 배치 프로세스 실행 중..."
+            nohup java -jar /home/ec2-user/OOT-Batch/build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar \
+              --spring.profiles.active=dev > /home/ec2-user/OOT-Batch/batch.log 2>&1 &
+
+            sleep 3
+            echo "실행 중인 프로세스 확인:"
+            pgrep -a -f 'OOT-Batch-0.0.1-SNAPSHOT.jar' || echo "실행된 프로세스가 없습니다."
