@@ -50,35 +50,36 @@ jobs:
             set -e
             JAR="${JAR_REMOTE}"
             LOG="${LOG_PATH}"
-            # 기본값 설정: 아래와 같이
             export REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
             export REDIS_PORT="${REDIS_PORT:-6379}"
-            
+
             echo "[CHECK] REDIS_HOST=$REDIS_HOST, REDIS_PORT=$REDIS_PORT"
             if [ -z "$REDIS_HOST" ] || [ -z "$REDIS_PORT" ]; then
               echo "REDIS_HOST 또는 REDIS_PORT 환경변수 없음!"; exit 1
             fi
-            
-            echo "[1] 기존 프로세스 중지"
-            OLD_PID=$(pgrep -f "${JAR}")
+
+            echo "[1] 기존 배치 프로세스 중지"
+            OLD_PID=$(pgrep -u "$USER" -f "java.*${JAR_NAME}")
             if [ -n "$OLD_PID" ]; then
-              echo "PID $OLD_PID 종료"
-              kill -9 $OLD_PID || true
+              for pid in $OLD_PID; do
+                echo "기존 프로세스(PID $pid) 종료 시도"
+                kill -9 $pid && echo "PID $pid 종료 성공" || echo "PID $pid 종료 실패(권한 없음 또는 이미 종료됨)"
+              done
             else
-              echo "실행 중인 프로세스 없음"
+              echo "실행 중인 기존 배치 프로세스 없음"
             fi
-            
-            echo "[2] 새 프로세스 실행 (환경변수 반영)"
+
+            echo "[2] 새 배치 프로세스 실행"
             nohup java -jar "${JAR}" --spring.profiles.active=dev > "${LOG}" 2>&1 &
             sleep 5
-            
+
             echo "[3] 프로세스 상태 체크"
-            NEW_PID=$(pgrep -f "${JAR}")
+            NEW_PID=$(pgrep -u "$USER" -f "java.*${JAR_NAME}")
             if [ -n "$NEW_PID" ]; then
               echo "재시작 성공 (PID: $NEW_PID)"
             else
               echo "재시작 실패"; exit 1
             fi
-            
+
             echo "[4] 최근 로그 (10줄)"
             tail -10 "${LOG}" || echo "로그 없음"
