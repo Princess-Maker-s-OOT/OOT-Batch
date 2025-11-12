@@ -50,13 +50,15 @@ jobs:
             set -e
             JAR="${JAR_REMOTE}"
             LOG="${LOG_PATH}"
-            export REDIS_HOST REDIS_PORT
-
+            # 기본값 설정: 아래와 같이
+            export REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
+            export REDIS_PORT="${REDIS_PORT:-6379}"
+            
             echo "[CHECK] REDIS_HOST=$REDIS_HOST, REDIS_PORT=$REDIS_PORT"
             if [ -z "$REDIS_HOST" ] || [ -z "$REDIS_PORT" ]; then
               echo "REDIS_HOST 또는 REDIS_PORT 환경변수 없음!"; exit 1
             fi
-
+            
             echo "[1] 기존 프로세스 중지"
             OLD_PID=$(pgrep -f "${JAR}")
             if [ -n "$OLD_PID" ]; then
@@ -65,11 +67,11 @@ jobs:
             else
               echo "실행 중인 프로세스 없음"
             fi
-
+            
             echo "[2] 새 프로세스 실행 (환경변수 반영)"
             nohup java -jar "${JAR}" --spring.profiles.active=dev > "${LOG}" 2>&1 &
             sleep 5
-
+            
             echo "[3] 프로세스 상태 체크"
             NEW_PID=$(pgrep -f "${JAR}")
             if [ -n "$NEW_PID" ]; then
@@ -77,6 +79,6 @@ jobs:
             else
               echo "재시작 실패"; exit 1
             fi
-
+            
             echo "[4] 최근 로그 (10줄)"
             tail -10 "${LOG}" || echo "로그 없음"
