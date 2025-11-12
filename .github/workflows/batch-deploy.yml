@@ -2,7 +2,7 @@ name: CI/CD Batch Deploy to EC2
 
 on:
   push:
-    branches: [ main ]    # or 'dev', 원하는 브랜치
+    branches: [ main ]  # 또는 dev 등 원하는 브랜치
 
 jobs:
   build-and-deploy:
@@ -37,5 +37,11 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            pkill -f 'OOT-Batch-0.0.1-SNAPSHOT.jar' || true
-            nohup java -jar /home/ec2-user/OOT-Batch/build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev > /home/ec2-user/OOT-Batch/batch.log 2>&1 &
+            echo "Stopping old batch process..."
+            pgrep -f 'OOT-Batch-0.0.1-SNAPSHOT.jar' && pkill -f 'OOT-Batch-0.0.1-SNAPSHOT.jar' || echo "No existing process."
+
+            echo "Starting new batch process..."
+            nohup bash -c "java -jar /home/ec2-user/OOT-Batch/build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev > /home/ec2-user/OOT-Batch/batch.log 2>&1 &" & disown
+
+            sleep 3
+            pgrep -f 'OOT-Batch-0.0.1-SNAPSHOT.jar' && echo 'Batch restarted successfully!' || echo 'Failed to start batch process.'
