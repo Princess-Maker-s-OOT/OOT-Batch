@@ -53,18 +53,23 @@ jobs:
             export REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
             export REDIS_PORT="${REDIS_PORT:-6379}"
 
-            echo "[CHECK] REDIS_HOST=$REDIS_HOST, REDIS_PORT=$REDIS_PORT"
+            echo "[환경: REDIS_HOST=$REDIS_HOST, REDIS_PORT=$REDIS_PORT]"
             if [ -z "$REDIS_HOST" ] || [ -z "$REDIS_PORT" ]; then
               echo "REDIS_HOST 또는 REDIS_PORT 환경변수 없음!"; exit 1
             fi
 
             echo "[1] 기존 배치 프로세스 중지"
-            OLD_PID=$(pgrep -u "$USER" -f "java.*${JAR_NAME}")
+            OLD_PID=$(pgrep -u "$USER" -f "java.*${JAR_NAME}" || true)
             if [ -n "$OLD_PID" ]; then
               for pid in $OLD_PID; do
-                echo "기존 프로세스(PID $pid) 종료 시도"
-                kill -9 $pid && echo "PID $pid 종료 성공" || echo "PID $pid 종료 실패(권한 없음 또는 이미 종료됨)"
+                if kill -9 $pid 2>/dev/null; then
+                  echo "PID $pid 종료 성공"
+                else
+                  echo "PID $pid 종료 실패 (권한 없음/이미 종료됨)"
+                fi
               done
+              # 안정적 재시작 대기
+              sleep 2
             else
               echo "실행 중인 기존 배치 프로세스 없음"
             fi
@@ -74,7 +79,7 @@ jobs:
             sleep 5
 
             echo "[3] 프로세스 상태 체크"
-            NEW_PID=$(pgrep -u "$USER" -f "java.*${JAR_NAME}")
+            NEW_PID=$(pgrep -u "$USER" -f "java.*${JAR_NAME}" || true)
             if [ -n "$NEW_PID" ]; then
               echo "재시작 성공 (PID: $NEW_PID)"
             else
