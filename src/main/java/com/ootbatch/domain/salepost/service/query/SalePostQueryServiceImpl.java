@@ -1,7 +1,7 @@
 package com.ootbatch.domain.salepost.service.query;
 
-import com.ootbatch.domain.salepost.dto.response.SaleStatusCount;
 import com.ootbatch.domain.salepost.repository.SalePostRepository;
+import com.ootcommon.salepost.response.SaleStatusCount;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

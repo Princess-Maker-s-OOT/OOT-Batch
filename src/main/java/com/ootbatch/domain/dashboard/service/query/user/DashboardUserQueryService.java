@@ -1,7 +1,7 @@
 package com.ootbatch.domain.dashboard.service.query.user;
 
-import com.ootbatch.domain.dashboard.dto.response.DashboardUserSummaryResponse;
-import com.ootbatch.domain.dashboard.dto.response.DashboardUserWearStatisticsResponse;
+import com.ootcommon.dashboard.response.DashboardUserSummaryResponse;
+import com.ootcommon.dashboard.response.DashboardUserWearStatisticsResponse;
 
 import java.time.LocalDate;
 

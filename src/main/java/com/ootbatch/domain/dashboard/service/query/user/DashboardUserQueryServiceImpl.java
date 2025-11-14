@@ -1,12 +1,12 @@
 package com.ootbatch.domain.dashboard.service.query.user;
 
-import com.ootbatch.domain.category.dto.response.CategoryStat;
 import com.ootbatch.domain.clothes.service.query.ClothesQueryService;
-import com.ootbatch.domain.dashboard.dto.response.DashboardUserSummaryResponse;
-import com.ootbatch.domain.dashboard.dto.response.DashboardUserWearStatisticsResponse;
-import com.ootbatch.domain.wearrecord.dto.response.ClothesWearCount;
-import com.ootbatch.domain.wearrecord.dto.response.NotWornOverPeriod;
+import com.ootcommon.category.response.CategoryStat;
+import com.ootcommon.dashboard.response.DashboardUserSummaryResponse;
+import com.ootcommon.dashboard.response.DashboardUserWearStatisticsResponse;
 import com.ootbatch.domain.wearrecord.service.query.WearRecordQueryService;
+import com.ootcommon.wearrecord.response.ClothesWearCount;
+import com.ootcommon.wearrecord.response.NotWornOverPeriod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

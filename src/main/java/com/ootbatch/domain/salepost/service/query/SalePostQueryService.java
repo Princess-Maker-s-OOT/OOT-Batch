@@ -1,6 +1,6 @@
 package com.ootbatch.domain.salepost.service.query;
 
-import com.ootbatch.domain.salepost.dto.response.SaleStatusCount;
+import com.ootcommon.salepost.response.SaleStatusCount;
 
 import java.time.LocalDateTime;
 import java.util.List;
