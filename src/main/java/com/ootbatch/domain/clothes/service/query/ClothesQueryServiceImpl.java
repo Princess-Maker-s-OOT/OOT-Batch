@@ -1,11 +1,11 @@
 package com.ootbatch.domain.clothes.service.query;
 
-import com.ootbatch.domain.category.dto.response.CategoryStat;
-import com.ootbatch.domain.clothes.dto.response.ClothesColorCount;
-import com.ootbatch.domain.clothes.dto.response.ClothesSizeCount;
 import com.ootbatch.domain.clothes.repository.ClothesRepository;
-import com.ootbatch.domain.wearrecord.dto.response.ClothesWearCount;
-import com.ootbatch.domain.wearrecord.dto.response.NotWornOverPeriod;
+import com.ootcommon.category.response.CategoryStat;
+import com.ootcommon.clothes.response.ClothesColorCount;
+import com.ootcommon.clothes.response.ClothesSizeCount;
+import com.ootcommon.wearrecord.response.ClothesWearCount;
+import com.ootcommon.wearrecord.response.NotWornOverPeriod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

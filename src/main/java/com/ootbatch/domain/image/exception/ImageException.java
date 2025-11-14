@@ -1,6 +1,5 @@
 package com.ootbatch.domain.image.exception;
 
-
 import com.ootbatch.common.exception.GlobalException;
 
 public class ImageException extends GlobalException {

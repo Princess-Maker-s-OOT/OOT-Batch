@@ -1,6 +1,6 @@
 package com.ootbatch.domain.wearrecord.repository;
 
-import com.ootbatch.domain.wearrecord.dto.response.ClothesWearCount;
+import com.ootcommon.wearrecord.response.ClothesWearCount;
 
 import java.time.LocalDate;
 import java.util.List;

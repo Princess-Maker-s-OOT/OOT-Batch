@@ -1,9 +1,9 @@
 package com.ootbatch.domain.wearrecord.repository;
 
 import com.ootbatch.domain.clothes.entity.QClothes;
-import com.ootbatch.domain.wearrecord.dto.response.ClothesWearCount;
-import com.ootbatch.domain.wearrecord.dto.response.QClothesWearCount;
 import com.ootbatch.domain.wearrecord.entity.QWearRecord;
+import com.ootcommon.wearrecord.response.ClothesWearCount;
+import com.ootcommon.wearrecord.response.QClothesWearCount;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 

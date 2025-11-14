@@ -1,7 +1,7 @@
 package com.ootbatch.domain.clothes.repository;
 
-import com.ootbatch.domain.category.dto.response.CategoryStat;
 import com.ootbatch.domain.clothes.entity.Clothes;
+import com.ootcommon.category.response.CategoryStat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

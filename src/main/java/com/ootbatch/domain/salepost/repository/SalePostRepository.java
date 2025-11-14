@@ -1,7 +1,7 @@
 package com.ootbatch.domain.salepost.repository;
 
-import com.ootbatch.domain.salepost.dto.response.SaleStatusCount;
 import com.ootbatch.domain.salepost.entity.SalePost;
+import com.ootcommon.salepost.response.SaleStatusCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
