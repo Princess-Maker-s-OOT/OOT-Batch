@@ -72,7 +72,7 @@ public class DashboardAdminQueryServiceImpl implements DashboardAdminQueryServic
     }
 
     @Override
-    @Cacheable(value = DashboardCacheNames.CLOTHES, unless = "#result == null")
+    @Cacheable(value = DashboardCacheNames.CLOTHES, key = "'default'", unless = "#result == null")
     public AdminClothesStatisticsResponse adminClothesStatistics() {
 
         long totalClothes = clothesQueryService.countClothesByIsDeletedFalse(); // 전체 옷 수량
@@ -144,7 +144,7 @@ public class DashboardAdminQueryServiceImpl implements DashboardAdminQueryServic
     }
 
     @Override
-    @Cacheable(value = DashboardCacheNames.CATEGORY, unless = "#result == null")
+    @Cacheable(value = DashboardCacheNames.CATEGORY, key = "'default'", unless = "#result == null")
     public AdminTopCategoryStatisticsResponse adminTopCategoryStatistics() {
 
         return new AdminTopCategoryStatisticsResponse(clothesQueryService.findTopCategoryStats());
