@@ -9,6 +9,7 @@ import com.ootbatch.domain.wearrecord.service.query.WearRecordQueryService;
 import com.ootcommon.wearrecord.response.ClothesWearCount;
 import com.ootcommon.wearrecord.response.NotWornOverPeriod;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -31,6 +33,7 @@ public class DashboardUserQueryServiceImpl implements DashboardUserQueryService 
             unless = "#result == null"
     )
     public DashboardUserSummaryResponse getUserDashboardSummary(Long userId) {
+        log.info("조회 userId: {}", userId);
 
         int totalCount = clothesQueryService.countAllClothesByUserIdAndIsDeletedFalse(userId);
 
@@ -42,10 +45,11 @@ public class DashboardUserQueryServiceImpl implements DashboardUserQueryService 
     @Override
     @Cacheable(
             cacheNames = DashboardUserCacheNames.WEAR_STATISTICS,
-            key = "#baseDate != null ? #baseDate.toString() : T(java.time.LocalDate).now().toString()",
+            key = "T(java.lang.String).format('%d_%s', #userId, #baseDate != null ? #baseDate.toString() : T(java.time.LocalDate).now().toString())",
             unless = "#result == null"
     )
     public DashboardUserWearStatisticsResponse getUserWearStatistics(Long userId, LocalDate baseDate) {
+        log.info("조회 userId: {}", userId);
 
         List<ClothesWearCount> wornThisWeek = wearRecordQueryService.wornThisWeek(userId, baseDate);
 

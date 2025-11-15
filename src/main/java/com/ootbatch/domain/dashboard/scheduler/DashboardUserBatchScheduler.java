@@ -16,8 +16,8 @@ public class DashboardUserBatchScheduler {
     private final JobLauncher jobLauncher;
     private final Job userDashboardBatchJob;
 
-    // 매일 0시마다 실행 (여기선 분 단위 cron, 실제 원하는 주기대로 변경 가능)
-    @Scheduled(cron = "0 * * * * *")
+    // 매일 자정 00:00에 실행
+    @Scheduled(cron = "0 0 0 * * *")
     public void runUserDashboardBatch() {
         log.info("사용자 대시보드 통계 집계 배치 시작");
         // 매 실행마다 고유 파라미터 추가 (예: 타임스탬프/UUID 등)
