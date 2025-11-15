@@ -19,10 +19,14 @@ public class DashboardUserBatchProcessor implements ItemProcessor<Long, Dashboar
 
     @Override
     public DashboardUserStatPair process(Long userId) {
+
         log.info("Processor: 통계 집계 시작 userId={}", userId);
+
         DashboardUserSummaryResponse summary = dashboardUserQueryService.getUserDashboardSummary(userId);
         DashboardUserWearStatisticsResponse wearStats = dashboardUserQueryService.getUserWearStatistics(userId, LocalDate.now());
+
         log.info("Processor: 통계 집계 완료 userId={}", userId);
+
         return new DashboardUserStatPair(userId, summary, wearStats);
     }
 }

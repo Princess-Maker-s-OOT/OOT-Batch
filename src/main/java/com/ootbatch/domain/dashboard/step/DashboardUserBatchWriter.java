@@ -22,10 +22,12 @@ public class DashboardUserBatchWriter implements ItemWriter<DashboardUserStatPai
 
     @Override
     public void write(@NonNull Chunk<? extends DashboardUserStatPair> items) {
+
         Cache summaryCache = cacheManager.getCache(DashboardUserCacheNames.SUMMARY);
         Cache wearCache = cacheManager.getCache(DashboardUserCacheNames.WEAR_STATISTICS);
 
         for (DashboardUserStatPair result : items) {
+
             try {
                 // 배치에서는 캐시만 무효화 (evict)
                 summaryCache.evict(result.getUserId());

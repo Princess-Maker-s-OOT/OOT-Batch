@@ -124,22 +124,23 @@ public class RedisConfig {
                         defaultConfig.entryTtl(Duration.ofMinutes(10))
                 )
                 .withCacheConfiguration(DashboardAdminCacheNames.USER,
-                        defaultConfig.entryTtl(Duration.ofMinutes(2))
+                        defaultConfig.entryTtl(Duration.ofMinutes(3))
                 )
                 .withCacheConfiguration(DashboardAdminCacheNames.CLOTHES,
-                        defaultConfig.entryTtl(Duration.ofMinutes(2))
+                        defaultConfig.entryTtl(Duration.ofMinutes(3))
                 )
                 .withCacheConfiguration(DashboardAdminCacheNames.SALE_POST,
-                        defaultConfig.entryTtl(Duration.ofMinutes(2))
+                        defaultConfig.entryTtl(Duration.ofMinutes(3))
                 )
                 .withCacheConfiguration(DashboardAdminCacheNames.CATEGORY,
-                        defaultConfig.entryTtl(Duration.ofMinutes(2))
+                        defaultConfig.entryTtl(Duration.ofMinutes(3))
                 )
+                // 사용자 대시보드: 24시간 배치 주기 → TTL 25시간
                 .withCacheConfiguration(DashboardUserCacheNames.SUMMARY,
-                        defaultConfig.entryTtl(Duration.ofMinutes(2))
+                        defaultConfig.entryTtl(Duration.ofHours(25))
                 )
                 .withCacheConfiguration(DashboardUserCacheNames.WEAR_STATISTICS,
-                        defaultConfig.entryTtl(Duration.ofMinutes(2))
+                        defaultConfig.entryTtl(Duration.ofHours(25))
                 )
                 .build();
     }

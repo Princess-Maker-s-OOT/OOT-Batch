@@ -14,6 +14,7 @@ public class DashboardUserBatchJobListener implements JobExecutionListener {
 
     @Override
     public void beforeJob(JobExecution jobExecution) {
+
         log.info(">>> 대시보드 배치 JOB 시작: {} (Id: {}, 시작 시각: {})",
                 jobExecution.getJobInstance().getJobName(),
                 jobExecution.getJobInstance().getId(),
@@ -22,12 +23,14 @@ public class DashboardUserBatchJobListener implements JobExecutionListener {
 
     @Override
     public void afterJob(JobExecution jobExecution) {
+
         LocalDateTime startTime = jobExecution.getStartTime();
         LocalDateTime endTime = jobExecution.getEndTime();
         long durationMillis = java.time.Duration.between(startTime, endTime).toMillis();
         long hours = durationMillis / (1000 * 60 * 60);
         long minutes = (durationMillis % (1000 * 60 * 60)) / (1000 * 60);
         long seconds = (durationMillis % (1000 * 60)) / 1000;
+
         String duration = hours > 0 ? String.format("%d시간 %d분", hours, minutes)
                 : minutes > 0 ? String.format("%d분", minutes)
                 : String.format("%d초", seconds);
@@ -37,17 +40,22 @@ public class DashboardUserBatchJobListener implements JobExecutionListener {
 
         // 모든 Step 결과 상세 로그
         long totalRead = 0, totalWrite = 0;
+
         for (StepExecution se : jobExecution.getStepExecutions()) {
+
             totalRead += se.getReadCount();
             totalWrite += se.getWriteCount();
+
             log.info("--> Step=[{}], 상태={}, [읽음={}, 기록={}, 처리누락={}, 커밋={}, 롤백={}, 스킵={}], 요약={}",
                     se.getStepName(), se.getStatus(),
                     se.getReadCount(), se.getWriteCount(), se.getProcessSkipCount(),
                     se.getCommitCount(), se.getRollbackCount(), se.getSkipCount(), se.getSummary());
+
             if (!se.getFailureExceptions().isEmpty()) {
                 log.error("Step 장애 발생: {} - {}", se.getStepName(), se.getFailureExceptions());
             }
         }
+
         log.info(">>> 전체 Batch 요약: 읽음={}, 기록={}", totalRead, totalWrite);
 
         if (!jobExecution.getAllFailureExceptions().isEmpty()) {

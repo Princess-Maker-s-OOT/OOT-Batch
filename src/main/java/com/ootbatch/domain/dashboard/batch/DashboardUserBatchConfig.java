@@ -55,6 +55,7 @@ public class DashboardUserBatchConfig {
 
     @Bean
     public JpaPagingItemReader<Long> userIdItemReader() {
+
         return new JpaPagingItemReaderBuilder<Long>()
                 .name("userIdItemReader")
                 .entityManagerFactory(entityManagerFactory)
@@ -65,6 +66,7 @@ public class DashboardUserBatchConfig {
 
     @Bean
     public Step userDashboardBatchStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+
         return new org.springframework.batch.core.step.builder.StepBuilder("userDashboardBatchStep", jobRepository)
                 .<Long, DashboardUserStatPair>chunk(CHUNK_SIZE, transactionManager)
                 .reader(userIdItemReader())
@@ -81,6 +83,7 @@ public class DashboardUserBatchConfig {
 
     @Bean
     public Job userDashboardBatchJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+
         return new org.springframework.batch.core.job.builder.JobBuilder("userDashboardBatchJob", jobRepository)
                 .listener(jobListener)
                 .start(userDashboardBatchStep(jobRepository, transactionManager))

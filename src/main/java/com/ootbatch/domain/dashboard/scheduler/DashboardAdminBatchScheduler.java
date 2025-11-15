@@ -20,7 +20,7 @@ public class DashboardAdminBatchScheduler {
     private final DashboardAdminQueryService dashboardAdminQueryService;
     private final CacheManager cacheManager; // CacheManager 주입
 
-    // 1분마다 캐시 무효화 및 갱신 - 추후에 시간 조절 리팩토링할 예정
+    // 1분마다 캐시 무효화 및 갱신
     @Scheduled(cron = "0 * * * * *")
     public void refreshDashboardCaches() {
         log.info("관리자 대시보드 캐시 무효화 시작");
