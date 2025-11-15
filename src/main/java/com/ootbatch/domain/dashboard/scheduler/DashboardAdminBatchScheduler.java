@@ -1,7 +1,7 @@
 package com.ootbatch.domain.dashboard.scheduler;
 
 import com.ootbatch.domain.dashboard.service.query.admin.DashboardAdminQueryService;
-import com.ootcommon.dashboard.constant.DashboardCacheNames;
+import com.ootcommon.dashboard.constant.DashboardAdminCacheNames;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
+@Slf4j
 @Component
 @EnableScheduling
 @RequiredArgsConstructor
-@Slf4j
-public class DashboardBatchScheduler {
+public class DashboardAdminBatchScheduler {
 
     private final DashboardAdminQueryService dashboardAdminQueryService;
     private final CacheManager cacheManager; // CacheManager 주입
@@ -26,10 +26,10 @@ public class DashboardBatchScheduler {
         log.info("관리자 대시보드 캐시 무효화 시작");
 
         // 수동으로 캐시 무효화
-        cacheManager.getCache(DashboardCacheNames.USER).clear();
-        cacheManager.getCache(DashboardCacheNames.CLOTHES).clear();
-        cacheManager.getCache(DashboardCacheNames.SALE_POST).clear();
-        cacheManager.getCache(DashboardCacheNames.CATEGORY).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.USER).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.CLOTHES).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.SALE_POST).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.CATEGORY).clear();
 
         log.info("캐시 무효화 완료, 재생성 시작");
 

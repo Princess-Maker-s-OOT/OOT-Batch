@@ -6,7 +6,7 @@ import com.ootbatch.domain.user.service.query.UserQueryService;
 import com.ootcommon.category.response.CategoryStat;
 import com.ootcommon.clothes.response.ClothesColorCount;
 import com.ootcommon.clothes.response.ClothesSizeCount;
-import com.ootcommon.dashboard.constant.DashboardCacheNames;
+import com.ootcommon.dashboard.constant.DashboardAdminCacheNames;
 import com.ootcommon.dashboard.response.AdminClothesStatisticsResponse;
 import com.ootcommon.dashboard.response.AdminSalePostStatisticsResponse;
 import com.ootcommon.dashboard.response.AdminTopCategoryStatisticsResponse;
@@ -38,7 +38,7 @@ public class DashboardAdminQueryServiceImpl implements DashboardAdminQueryServic
 
     @Override
     @Cacheable(
-            value = DashboardCacheNames.USER,
+            value = DashboardAdminCacheNames.USER,
             key = "#baseDate != null ? #baseDate.toString() : T(java.time.LocalDate).now().toString()",
             unless = "#result == null"
     )
@@ -72,7 +72,7 @@ public class DashboardAdminQueryServiceImpl implements DashboardAdminQueryServic
     }
 
     @Override
-    @Cacheable(value = DashboardCacheNames.CLOTHES, unless = "#result == null")
+    @Cacheable(value = DashboardAdminCacheNames.CLOTHES, key = "'default'", unless = "#result == null")
     public AdminClothesStatisticsResponse adminClothesStatistics() {
 
         long totalClothes = clothesQueryService.countClothesByIsDeletedFalse(); // 전체 옷 수량
@@ -93,7 +93,7 @@ public class DashboardAdminQueryServiceImpl implements DashboardAdminQueryServic
 
     @Override
     @Cacheable(
-            value = DashboardCacheNames.SALE_POST,
+            value = DashboardAdminCacheNames.SALE_POST,
             key = "#baseDate != null ? #baseDate.toString() : T(java.time.LocalDate).now().toString()",
             unless = "#result == null"
     )
@@ -144,7 +144,7 @@ public class DashboardAdminQueryServiceImpl implements DashboardAdminQueryServic
     }
 
     @Override
-    @Cacheable(value = DashboardCacheNames.CATEGORY, unless = "#result == null")
+    @Cacheable(value = DashboardAdminCacheNames.CATEGORY, key = "'default'", unless = "#result == null")
     public AdminTopCategoryStatisticsResponse adminTopCategoryStatistics() {
 
         return new AdminTopCategoryStatisticsResponse(clothesQueryService.findTopCategoryStats());
