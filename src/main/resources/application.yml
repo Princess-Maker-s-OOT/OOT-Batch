@@ -10,17 +10,17 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none   # 배치 서버는 스키마 변경 금지
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
 
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: never   # schema.sql로 직접 관리
   sql:
     init:
-      mode: always  # Boot 2.5+ 환경에서 필요
+      mode: always  # Boot 2.5+ 환경에서 필요, schema.sql 실행
 
   data:
     redis:
