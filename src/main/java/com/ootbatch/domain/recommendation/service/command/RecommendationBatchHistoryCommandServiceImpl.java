@@ -1,6 +1,10 @@
 package com.ootbatch.domain.recommendation.service.command;
 
+import com.ootbatch.domain.recommendation.exception.BatchErrorCode;
+import com.ootbatch.domain.recommendation.exception.BatchException;
+import com.ootbatch.domain.recommendation.repository.RecommendationBatchHistoryRepository;
 import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
+import com.ootcommon.recommendation.status.BatchStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,7 +44,7 @@ public class RecommendationBatchHistoryCommandServiceImpl implements Recommendat
             Integer totalRecommendations
     ) {
         RecommendationBatchHistory batchHistory = batchHistoryRepository.findById(batchHistoryId)
-                .orElseThrow(() -> new RecommendationException(RecommendationErrorCode.BATCH_HISTORY_NOT_FOUND));
+                .orElseThrow(() -> new BatchException(BatchErrorCode.BATCH_HISTORY_NOT_FOUND));
 
         LocalDateTime now = LocalDateTime.now(clock);
         batchHistory.markAsSuccess(
@@ -73,7 +77,7 @@ public class RecommendationBatchHistoryCommandServiceImpl implements Recommendat
             Long executionTimeMs
     ) {
         RecommendationBatchHistory batchHistory = batchHistoryRepository.findById(batchHistoryId)
-                .orElseThrow(() -> new RecommendationException(RecommendationErrorCode.BATCH_HISTORY_NOT_FOUND));
+                .orElseThrow(() -> new BatchException(BatchErrorCode.BATCH_HISTORY_NOT_FOUND));
 
         batchHistory.markAsSuccess(
                 endTime,
@@ -99,7 +103,7 @@ public class RecommendationBatchHistoryCommandServiceImpl implements Recommendat
     public void completeBatchFailure(Long batchHistoryId, String errorMessage) {
 
         RecommendationBatchHistory batchHistory = batchHistoryRepository.findById(batchHistoryId)
-                .orElseThrow(() -> new RecommendationException(RecommendationErrorCode.BATCH_HISTORY_NOT_FOUND));
+                .orElseThrow(() -> new BatchException(BatchErrorCode.BATCH_HISTORY_NOT_FOUND));
 
         LocalDateTime now = LocalDateTime.now(clock);
         batchHistory.markAsFailed(now, errorMessage);
@@ -116,7 +120,7 @@ public class RecommendationBatchHistoryCommandServiceImpl implements Recommendat
             String errorMessage
     ) {
         RecommendationBatchHistory batchHistory = batchHistoryRepository.findById(batchHistoryId)
-                .orElseThrow(() -> new RecommendationException(RecommendationErrorCode.BATCH_HISTORY_NOT_FOUND));
+                .orElseThrow(() -> new BatchException(BatchErrorCode.BATCH_HISTORY_NOT_FOUND));
 
         batchHistory.markAsFailed(
                 endTime,

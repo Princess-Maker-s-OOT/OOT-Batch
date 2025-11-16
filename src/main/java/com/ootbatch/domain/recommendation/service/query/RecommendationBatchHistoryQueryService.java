@@ -1,5 +1,7 @@
 package com.ootbatch.domain.recommendation.service.query;
 
+import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
+import com.ootcommon.recommendation.status.BatchStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

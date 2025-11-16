@@ -9,14 +9,14 @@ import java.util.List;
 public record RecommendationBatchResult(
 
         Long userId,
-        List<Recommendation> recommendations,
+        List<RecommendationBatchCreateResponse> recommendations,
         boolean success,
         String errorMessage
 ) {
     /**
      * 성공 케이스 생성
      */
-    public static RecommendationBatchResult success(Long userId, List<Recommendation> recommendations) {
+    public static RecommendationBatchResult success(Long userId, List<RecommendationBatchCreateResponse> recommendations) {
 
         return RecommendationBatchResult.builder()
                 .userId(userId)

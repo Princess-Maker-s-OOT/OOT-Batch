@@ -1,5 +1,8 @@
 package com.ootbatch.domain.recommendation.service.query;
 
+import com.ootbatch.domain.recommendation.exception.BatchErrorCode;
+import com.ootbatch.domain.recommendation.exception.BatchException;
+import com.ootbatch.domain.recommendation.repository.RecommendationBatchHistoryRepository;
 import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
 import com.ootcommon.recommendation.status.BatchStatus;
 import lombok.RequiredArgsConstructor;
@@ -42,13 +45,13 @@ public class RecommendationBatchHistoryQueryServiceImpl implements Recommendatio
     public RecommendationBatchHistory getLastBatchHistory() {
 
         return batchHistoryRepository.findFirstByOrderByStartTimeDesc()
-                .orElseThrow(() -> new RecommendationException(RecommendationErrorCode.BATCH_HISTORY_NOT_FOUND));
+                .orElseThrow(() -> new BatchException(BatchErrorCode.BATCH_HISTORY_NOT_FOUND));
     }
 
     @Override
     public RecommendationBatchHistory getLastSuccessBatchHistory() {
 
         return batchHistoryRepository.findFirstByStatusOrderByStartTimeDesc(BatchStatus.SUCCESS)
-                .orElseThrow(() -> new RecommendationException(RecommendationErrorCode.BATCH_HISTORY_NOT_FOUND));
+                .orElseThrow(() -> new BatchException(BatchErrorCode.BATCH_HISTORY_NOT_FOUND));
     }
 }

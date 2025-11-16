@@ -1,6 +1,8 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   profiles:
-    active: local   # 기본 활성화
+    active: local
 
   datasource:
     url: ${DB_URL:jdbc:mysql://localhost:3306/${DB_NAME}}
@@ -10,17 +12,17 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none   # 배치 서버는 스키마 변경 금지
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
 
   batch:
     jdbc:
-      initialize-schema: never   # schema.sql로 직접 관리
+      initialize-schema: never
   sql:
     init:
-      mode: always  # Boot 2.5+ 환경에서 필요, schema.sql 실행
+      mode: always
 
   data:
     redis:
@@ -37,3 +39,7 @@ spring:
 
 server:
   port: 8081
+
+internal:
+  api:
+    main-server-url: ${MAIN_SERVER_URL:http://localhost:8080}
