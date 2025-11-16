@@ -1,6 +1,7 @@
 package com.ootbatch.domain.recommendation.listener;
 
 
+import com.ootbatch.domain.recommendation.dto.RecommendationBatchResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.ItemWriteListener;

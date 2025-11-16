@@ -1,5 +1,7 @@
 package com.ootbatch.domain.recommendation.service.command;
 
+import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
+
 import java.time.LocalDateTime;
 
 public interface RecommendationBatchHistoryCommandService {

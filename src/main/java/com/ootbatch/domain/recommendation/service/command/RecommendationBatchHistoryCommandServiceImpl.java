@@ -1,5 +1,6 @@
 package com.ootbatch.domain.recommendation.service.command;
 
+import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

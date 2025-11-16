@@ -1,6 +1,8 @@
 package com.ootbatch.domain.recommendation.repository;
 
 
+import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
+import com.ootcommon.recommendation.status.BatchStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

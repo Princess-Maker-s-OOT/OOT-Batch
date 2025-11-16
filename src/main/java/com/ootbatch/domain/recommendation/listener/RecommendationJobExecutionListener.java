@@ -1,5 +1,7 @@
 package com.ootbatch.domain.recommendation.listener;
 
+import com.ootbatch.domain.recommendation.service.command.RecommendationBatchHistoryCommandService;
+import com.ootcommon.recommendation.entity.RecommendationBatchHistory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.JobExecution;

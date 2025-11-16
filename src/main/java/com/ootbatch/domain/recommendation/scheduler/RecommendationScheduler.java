@@ -1,5 +1,6 @@
 package com.ootbatch.domain.recommendation.scheduler;
 
+import com.ootbatch.domain.recommendation.service.command.RecommendationBatchHistoryCommandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
