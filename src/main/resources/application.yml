@@ -1,8 +1,6 @@
 spring:
-  config:
-    import: optional:file:.env[.properties]
   profiles:
-    active: local
+    active: local   # 기본 활성화
 
   datasource:
     url: ${DB_URL:jdbc:mysql://localhost:3306/${DB_NAME}}
@@ -12,17 +10,17 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
 
   batch:
     jdbc:
-      initialize-schema: never
+      initialize-schema: always
   sql:
     init:
-      mode: always
+      mode: always  # Boot 2.5+ 환경에서 필요
 
   data:
     redis:
@@ -39,7 +37,3 @@ spring:
 
 server:
   port: 8081
-
-internal:
-  api:
-    main-server-url: ${MAIN_SERVER_URL:http://localhost:8080}
