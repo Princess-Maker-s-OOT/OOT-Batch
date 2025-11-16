@@ -1,5 +1,6 @@
 package com.ootbatch.domain.recommendation.dto;
 
+import com.ootcommon.recommendation.dto.RecommendationBatchCreateResponse;
 import lombok.AccessLevel;
 import lombok.Builder;
 

@@ -2,9 +2,9 @@ package com.ootbatch.domain.recommendation.entity;
 
 import com.ootbatch.common.entity.BaseEntity;
 import com.ootbatch.domain.clothes.entity.Clothes;
-import com.ootbatch.domain.recommendation.status.RecommendationStatus;
-import com.ootbatch.domain.recommendation.type.RecommendationType;
 import com.ootbatch.domain.user.entity.User;
+import com.ootcommon.recommendation.status.RecommendationStatus;
+import com.ootcommon.recommendation.type.RecommendationType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

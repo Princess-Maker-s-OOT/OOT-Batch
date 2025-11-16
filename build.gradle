@@ -46,7 +46,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     // 공통 DTO 레포
-    implementation 'com.github.Princess-Maker-s-OOT:OOT-Common:v.1.0.5'
+    implementation 'com.github.Princess-Maker-s-OOT:OOT-Common:v.1.0.7'
 
     // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
