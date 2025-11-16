@@ -6,6 +6,8 @@ import com.ootbatch.domain.recommendation.entity.Recommendation;
 import com.ootbatch.domain.recommendation.repository.RecommendationRepository;
 import com.ootbatch.domain.user.entity.User;
 import com.ootcommon.recommendation.dto.RecommendationBatchCreateResponse;
+import com.ootcommon.recommendation.status.RecommendationStatus;
+import com.ootcommon.recommendation.type.RecommendationType;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,9 +65,9 @@ public class RecommendationItemWriter implements ItemWriter<RecommendationBatchR
         return Recommendation.builder()
                 .user(userRef)
                 .clothes(clothesRef)
-                .type(dto.type())
+                .type(RecommendationType.valueOf(dto.type()))
                 .reason(dto.reason())
-                .status(dto.status())
+                .status(RecommendationStatus.valueOf(dto.status()))
                 .build();
     }
 }
