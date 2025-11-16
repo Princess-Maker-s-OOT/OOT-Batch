@@ -1,8 +1,8 @@
 package com.ootbatch.domain.recommendation.step;
 
 import com.ootbatch.domain.recommendation.client.RecommendationApiClient;
-import com.ootbatch.domain.recommendation.dto.RecommendationBatchCreateResponse;
 import com.ootbatch.domain.recommendation.dto.RecommendationBatchResult;
+import com.ootcommon.recommendation.dto.RecommendationBatchCreateResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;

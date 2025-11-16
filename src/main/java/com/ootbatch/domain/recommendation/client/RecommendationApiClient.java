@@ -1,6 +1,6 @@
 package com.ootbatch.domain.recommendation.client;
 
-import com.ootbatch.domain.recommendation.dto.RecommendationBatchCreateResponse;
+import com.ootcommon.recommendation.dto.RecommendationBatchCreateResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

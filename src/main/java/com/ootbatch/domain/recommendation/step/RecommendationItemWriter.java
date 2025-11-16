@@ -1,11 +1,11 @@
 package com.ootbatch.domain.recommendation.step;
 
 import com.ootbatch.domain.clothes.entity.Clothes;
-import com.ootbatch.domain.recommendation.dto.RecommendationBatchCreateResponse;
 import com.ootbatch.domain.recommendation.dto.RecommendationBatchResult;
 import com.ootbatch.domain.recommendation.entity.Recommendation;
 import com.ootbatch.domain.recommendation.repository.RecommendationRepository;
 import com.ootbatch.domain.user.entity.User;
+import com.ootcommon.recommendation.dto.RecommendationBatchCreateResponse;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
