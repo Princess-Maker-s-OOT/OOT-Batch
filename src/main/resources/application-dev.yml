@@ -7,10 +7,18 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none   # dev 환경에서도 스키마 변경 금지
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  batch:
+    jdbc:
+      initialize-schema: never    # schema.sql로 메타테이블 초기화
+  sql:
+    init:
+      mode: always
+
 
   data:
     redis:

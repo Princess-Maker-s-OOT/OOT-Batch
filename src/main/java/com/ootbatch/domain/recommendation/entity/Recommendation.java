@@ -7,6 +7,7 @@ import com.ootbatch.domain.recommendation.type.RecommendationType;
 import com.ootbatch.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,4 +42,13 @@ public class Recommendation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RecommendationStatus status;
+
+    @Builder
+    private Recommendation(User user, Clothes clothes, RecommendationType type, String reason, RecommendationStatus status) {
+        this.user = user;
+        this.clothes = clothes;
+        this.type = type;
+        this.reason = reason;
+        this.status = status;
+    }
 }
