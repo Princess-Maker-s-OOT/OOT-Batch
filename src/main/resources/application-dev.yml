@@ -14,7 +14,7 @@ spring:
 
   batch:
     jdbc:
-      initialize-schema: never    # schema.sql로 메타테이블 초기화
+      initialize-schema: always    # schema.sql로 메타테이블 초기화
   sql:
     init:
       mode: always
