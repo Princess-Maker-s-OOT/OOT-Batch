@@ -1,0 +1,44 @@
+package com.ootbatch.domain.dashboard.scheduler;
+
+import com.ootbatch.domain.dashboard.service.query.admin.DashboardAdminQueryService;
+import com.ootcommon.dashboard.constant.DashboardAdminCacheNames;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+
+@Slf4j
+@Component
+@EnableScheduling
+@RequiredArgsConstructor
+public class DashboardAdminBatchScheduler {
+
+    private final DashboardAdminQueryService dashboardAdminQueryService;
+    private final CacheManager cacheManager; // CacheManager 주입
+
+    // 1분마다 캐시 무효화 및 갱신
+    @Scheduled(cron = "0 * * * * *")
+    public void refreshDashboardCaches() {
+        log.info("관리자 대시보드 캐시 무효화 시작");
+
+        // 수동으로 캐시 무효화
+        cacheManager.getCache(DashboardAdminCacheNames.USER).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.CLOTHES).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.SALE_POST).clear();
+        cacheManager.getCache(DashboardAdminCacheNames.CATEGORY).clear();
+
+        log.info("캐시 무효화 완료, 재생성 시작");
+
+        // 캐시 재생성 (이 호출은 프록시를 통해 이루어짐)
+        dashboardAdminQueryService.adminUserStatistics(LocalDate.now());
+        dashboardAdminQueryService.adminClothesStatistics();
+        dashboardAdminQueryService.adminSalePostStatistics(LocalDate.now());
+        dashboardAdminQueryService.adminTopCategoryStatistics();
+
+        log.info("관리자 대시보드 캐시 재생성 완료");
+    }
+}

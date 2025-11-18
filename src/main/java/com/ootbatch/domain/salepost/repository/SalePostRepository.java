@@ -1,7 +1,7 @@
 package com.ootbatch.domain.salepost.repository;
 
-import com.ootbatch.domain.salepost.dto.response.SaleStatusCount;
 import com.ootbatch.domain.salepost.entity.SalePost;
+import com.ootcommon.salepost.response.SaleStatusCount;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +15,7 @@ public interface SalePostRepository extends JpaRepository<SalePost, Long> {
 
     // 상태별 판매글 조회
     @Query("""
-            SELECT sp.status, count(sp)
+            SELECT new com.ootcommon.salepost.response.SaleStatusCount(sp.status, COUNT(sp))
             FROM SalePost sp
             WHERE sp.isDeleted = false
             GROUP BY sp.status

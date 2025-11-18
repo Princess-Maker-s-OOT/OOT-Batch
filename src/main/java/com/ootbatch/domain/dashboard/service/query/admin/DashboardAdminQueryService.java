@@ -1,9 +1,9 @@
 package com.ootbatch.domain.dashboard.service.query.admin;
 
-import com.ootbatch.domain.dashboard.dto.response.AdminClothesStatisticsResponse;
-import com.ootbatch.domain.dashboard.dto.response.AdminSalePostStatisticsResponse;
-import com.ootbatch.domain.dashboard.dto.response.AdminTopCategoryStatisticsResponse;
-import com.ootbatch.domain.dashboard.dto.response.AdminUserStatisticsResponse;
+import com.ootcommon.dashboard.response.AdminClothesStatisticsResponse;
+import com.ootcommon.dashboard.response.AdminSalePostStatisticsResponse;
+import com.ootcommon.dashboard.response.AdminTopCategoryStatisticsResponse;
+import com.ootcommon.dashboard.response.AdminUserStatisticsResponse;
 
 import java.time.LocalDate;
 
