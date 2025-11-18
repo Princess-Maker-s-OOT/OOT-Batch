@@ -200,14 +200,18 @@ java -jar build/libs/OOT-Batch-0.0.1-SNAPSHOT.jar
 
 ## 환경 변수/설정파일
 
-| DB_URL            | 데이터베이스 연결 URL          |
-	| DB_USERNAME       | 데이터베이스 사용자 이름       |
-	| DB_PASSWORD       | 데이터베이스 비밀번호          |
-	| REDIS_HOST        | Redis 서버 호스트              |
-	| REDIS_PORT        | Redis 서버 포트                |
-	| REDIS_PASSWORD    | Redis 서버 비밀번호            |
+| 변수명          | 설명                     |
+|----------------|-------------------------|
+| DB_URL         | 데이터베이스 연결 URL    |
+| DB_USERNAME    | 데이터베이스 사용자 이름  |
+| DB_PASSWORD    | 데이터베이스 비밀번호     |
+| REDIS_HOST     | Redis 서버 호스트        |
+| REDIS_PORT     | Redis 서버 포트          |
+| REDIS_PASSWORD | Redis 서버 비밀번호      |
+
 
 ## AWS 연동 가이드
 - EC2 인스턴스에서 GitHub 코드 pull 후 빌드
 - RDS(MySQL) 연결 권한 및 시크릿 입력 필요
+
 
